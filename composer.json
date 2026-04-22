@@ -1,0 +1,89 @@
+{
+    "name": "aldavigdis/license-and-registration",
+    "version": "0.0.1",
+    "type": "wordpress-plugin",
+    "require": {
+        "typisttech/imposter-plugin": "^0.6.0@dev",
+        "ramsey/uuid": "^4.9",
+        "tuupola/base85": "^2.1",
+        "opis/json-schema": "^2.6",
+        "leongrdic/pdf417": "^1.0"
+    },
+    "require-dev": {
+        "wp-coding-standards/wpcs": "^3.0",
+        "slevomat/coding-standard": "^8.14",
+        "phpcompatibility/php-compatibility": "^9.3",
+        "phpunit/phpunit": "^10",
+        "psy/psysh": "^0.12.0",
+        "yoast/phpunit-polyfills": "^2.0",
+        "aldavigdis/wp-tests-strapon": "^0.1",
+        "woocommerce/woocommerce": "10.2.2",
+        "woocommerce/wc-smooth-generator": "1.2.2"
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "woocommerce/woocommerce",
+                "version": "10.2.2",
+                "dist": {
+                    "url": "https://github.com/woocommerce/woocommerce/releases/download/10.2.2/woocommerce.zip",
+                    "type": "zip"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "woocommerce/wc-smooth-generator",
+                "version": "1.2.2",
+                "dist": {
+                    "url": "https://github.com/woocommerce/wc-smooth-generator/releases/download/1.2.2/wc-smooth-generator.zip",
+                    "type": "zip"
+                }
+            }
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "composer/installers": false,
+            "typisttech/imposter-plugin": true
+        }
+    },
+     "extra": {
+        "imposter": {
+            "namespace": "AldaVigdis\\LicenseAndRegistration"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "AldaVigdis\\LicenseAndRegistration\\": "src/"
+        }
+    },
+    "scripts": {
+        "shell:bash": [
+            "Composer\\Config::disableProcessTimeout",
+            "docker exec -it $(docker-compose ps -q | head -n 1) bash"
+        ],
+        "shell:wp": [
+            "Composer\\Config::disableProcessTimeout",
+            "docker exec -it $(docker-compose ps -q | head -n 1) wp shell --allow-root"
+        ],
+        "test": [
+            "./vendor/bin/phpunit --testdox --exclude-group external-api --display-warnings --display-notices"
+        ],
+        "test:external": [
+            "./vendor/bin/phpunit --testdox --group external-api --display-warnings --display-notices"
+        ],
+        "debug:tail": [
+            "Composer\\Config::disableProcessTimeout",
+            "docker exec -it $(docker-compose ps -q | head -n 1) tail -f /tmp/wp-errors.log"
+        ],
+        "lint": "./vendor/bin/phpcs -s ./src/ ./js/ ./style/ ./views/",
+        "lint:fix": "./vendor/bin/phpcbf -s ./src/ ./js/ ./style/ ./views/",
+        "release:zip": "bash ./bin/release-zip.sh",
+        "checksums:generate": "bash ./bin/checksums-generate.sh",
+        "checksums:validate": "bash ./bin/checksums-validate.sh"
+    }
+}

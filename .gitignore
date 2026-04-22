@@ -1,0 +1,6 @@
+/dockpress-secrets/*
+/.vscode/
+/keys/*.pub
+/keys/??????????
+/vendor/
+/languages/*~

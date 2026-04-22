@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.0/phpunit.xsd"
+    cacheResult="false"
+    bootstrap="tests/_bootstrap.php"
+>
+	<php>
+		<env name="WP_VERSION" value="6.8.1" />
+		<env name="DB_USER" value="root" />
+		<env name="DB_PASSWORD" value="password" />
+	</php>
+  <testsuites>
+    <testsuite name="Project Test Suite">
+      <directory>tests</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>

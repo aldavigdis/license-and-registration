@@ -1,0 +1,28 @@
+services:
+  dockpress:
+    image: dockpress
+    restart: always
+    volumes:
+      - ./dockpress-secrets:/secrets
+      - .:/var/www/html/wp-content/plugins/license-and-registration/
+    ports:
+      - 80:80
+    environment:
+      - REMOVE_CRAP_PLUGINS=true
+      - WP_PLUGIN_INSTALL=woocommerce
+      - WP_PLUGIN_ACTIVATE=--all
+  mariadb:
+    image: mariadb
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      - MARIADB_DATABASE=wordpress
+      - MARIADB_USER=wordpress
+      - MARIADB_PASSWORD=password
+      - MARIADB_ROOT_PASSWORD=password
+  memcached:
+    image: memcached
+    restart: always
+    ports:
+      - 11211:11211

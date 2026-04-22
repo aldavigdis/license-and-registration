@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+<!--
+# Alda Vigdis' PHPCS Configuration for WordPress Plugins
+
+A PHPCS Configuration for WordPress plugins, assuming the use of PSR-4
+autoloading and Imposter.
+
+The mainline WordPress coding standard is meant for use with WordPress itself
+and projects that may end up being included in the WordPress Core. When making
+your own plugins or themes using modern development methods and practices that
+reflect that you know what you're doing, the best course of action is to shake
+off some of the legacy constraints that the WP Core has allowed to remain since
+2005, while allowing for some of the performance, security and stylistic rules
+to remain in your own work.
+
+This ruleset assumes the following:
+
+- The presence of the slevomat, wp-coding-standards and phpcompatibility packages
+- PSR-4 autoloading and namespacing using Composer and tools such as Imposter
+- Tabs for indentation, as per WP itself
+- Yoda conditions were never a good idea
+- Applies WP-derrived rules to JS and CSS files
+- JS and CSS to be enqueued inside of <head>
+
+Further reading and tools:
+
+- The PSR-4 autoloading standard: https://www.php-fig.org/psr/psr-4/
+- The PSR-4 autoloading section of the PHP Composer manual: https://getcomposer.org/doc/01-basic-usage.md#autoloading
+- The Imposter plugin for PHP Composer: https://github.com/typisttech/imposter-plugin
+
+Copyright 2025 Alda Vigdis Skarphedinsdottir
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the “Software”), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<ruleset name="PHP_CodeSniffer">
+	<description>Alda Vigdis' PHPCS Configuration for WordPress Plugins</description>
+
+	<config
+		name="installed_paths"
+		value="../../slevomat/coding-standard,../../wp-coding-standards/wpcs,../../phpcsstandards/phpcsutils,../../phpcsstandards/phpcsextra,../../phpcompatibility/php-compatibility/"
+	/>
+
+	<arg name="extensions" value="php,js,css"/>
+
+	<rule ref="PHPCompatibility">
+	</rule>
+	<config name="testVersion" value="8.2-"/>
+
+	<!-- Use WordPress as the basis of our ruleset -->
+	<rule ref="WordPress">
+		<!--
+		Absolutely ignoring that slow queries may occur when looking things up
+		by meta.
+		-->
+		<exclude name="WordPress.DB.SlowDBQuery" />
+
+		<!--
+		We are not limited by WordPress' naming constraints and are using PSR-4
+		autoloading, so we'll use that file naming convention.
+		-->
+		<exclude name="WordPress.Files.FileName" />
+
+		<!--
+		As there is only a single class and a single namepsace in each file,
+		we'll skip the file comment rule as it is sufficient to document that
+		single class.
+		-->
+		<exclude name="Squiz.Commenting.FileComment.Missing" />
+
+		<!--
+		Disable file comment checks as the only file comment is the one in the
+		root file, used for WordPress specific metadata.
+		-->
+		<exclude name="Squiz.Commenting.FileComment" />
+
+		<!--
+		Disabling a check for JS being loaded from the footer. It is heresy.
+		All JS should be loaded from within <head> as god intended.
+		-->
+		<exclude name="WordPress.WP.EnqueuedResourceParameters.NotInFooter" />
+
+		<!--
+		Disabling checks for class property types being dockblocked when it's
+		sufficient to declare their type when the function is declared.
+		-->
+		<exclude name="Squiz.Commenting.VariableComment.MissingVar"></exclude>
+
+		<!--
+		Disabling the check for the use of object properties that are not in
+		snake case as we are using objects derrived 3rd party APIs.
+		-->
+		<exclude name="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase"></exclude>
+
+		<!--
+		Removing the requirement for Yoda Conditions from the WP Coding
+		Standard, which is both annoying and stupid to have in a new codebase.
+		-->
+		<exclude name="WordPress.PHP.YodaConditions.NotYoda"></exclude>
+
+		<!--
+		Sometimes it's better to query the database directly.
+		-->
+		<exclude name="WordPress.DB.DirectDatabaseQuery.DirectQuery"></exclude>
+		<exclude name="WordPress.DB.DirectDatabaseQuery.NoCaching"></exclude>
+
+		<exclude-pattern>./tests/**</exclude-pattern>
+	</rule>
+
+	<!--
+	Disabling multiline function call checks for JS files.
+	This sniff seems to be buggy as it is insisiting on spaces, instead of tabs.
+	-->
+	<rule ref="PEAR.Functions.FunctionCallSignature.Indent">
+		<exclude-pattern>./js/**</exclude-pattern>
+	</rule>
+
+	<!--
+	Excluding commenting rules from tests, as we are using TestDox.
+	-->
+	<rule ref="Squiz.Commenting.ClassComment.Missing">
+		<exclude-pattern>./tests/**</exclude-pattern>
+	</rule>
+	<rule ref="Squiz.Commenting.FunctionComment.Missing">
+		<exclude-pattern>./tests/**</exclude-pattern>
+	</rule>
+
+	<!--
+	Disabling everything from the phpcsextra package.
+	-->
+	<rule ref="Universal">
+		<exclude name="Universal"></exclude>
+	</rule>
+
+	<!--
+	Enforcing strict_types decleration at top of all PHP files.
+	-->
+	<rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
+		<properties>
+			<property name="spacesCountAroundEqualsSign" value="1" />
+			<property name="linesCountBeforeDeclare" value="1" />
+			<property name="linesCountAfterDeclare" value="1" />
+		</properties>
+	</rule>
+
+	<!--
+	Enforcing type hinting for function parameters.
+	-->
+	<rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint">
+		<exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification" />
+	</rule>
+
+	<!--
+	Enforcing type hinting for function return values.
+	-->
+	<rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint">
+		<exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification" />
+	</rule>
+
+	<!--
+	Disallowing "sloppy" equals operators, so that === needs to be used, not
+	only checking for the value, but also the type used, as we are using
+	strict mode.
+	-->
+	<rule ref="SlevomatCodingStandard.Operators.DisallowEqualOperators">
+	</rule>
+
+	<!--
+	Disallowing "use" statements for classes that are not used.
+	-->
+	<rule ref="SlevomatCodingStandard.Namespaces.UnusedUses"></rule>
+
+	<!--
+	Reversing the Yoda Conditions requirement from the WordPress coding style,
+	outright banning them.
+	-->
+	<rule ref="Generic.ControlStructures.DisallowYodaConditions"></rule>
+
+	<!--
+	Excluding the vendor direcotry because that's where 3rd party and generated
+	code resides.
+	-->
+	<exclude-pattern>./vendor/*</exclude-pattern>
+
+	<!--
+	Exclude the languages directory, as it may include generated PHP files that
+	are not intended to be human readable or edited by mortals.
+	-->
+	<exclude-pattern>./languages/*</exclude-pattern>
+</ruleset>

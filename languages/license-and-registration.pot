@@ -1,0 +1,133 @@
+# Copyright (C) 2025 Alda Vigdis
+# This file is distributed under the GPL-3.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: License and Registration 0.0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/license-and-registration\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-11-26T12:02:30+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: license-and-registration\n"
+
+#. Plugin Name of the plugin
+#: license-and-registration.php
+msgid "License and Registration"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: license-and-registration.php
+msgid "https://github.com/aldavigdis/license-and-registration/"
+msgstr ""
+
+#. Description of the plugin
+#: license-and-registration.php
+msgid "Sell cryptographically secure licenses for your monetised apps in your WooCommerce store"
+msgstr ""
+
+#. Author of the plugin
+#: license-and-registration.php
+msgid "Alda Vigdis"
+msgstr ""
+
+#. Author URI of the plugin
+#: license-and-registration.php
+msgid "https://aldavigdis.is"
+msgstr ""
+
+#: src/KennitalaField.php:246
+#: src/KennitalaField.php:288
+#: src/KennitalaField.php:422
+#: src/KennitalaField.php:563
+msgid "Kennitala"
+msgstr ""
+
+#: src/KennitalaField.php:461
+msgid "Invalid kennitala nonce"
+msgstr ""
+
+#: src/KennitalaField.php:485
+msgid "Kennitala is a required field"
+msgstr ""
+
+#: src/KennitalaField.php:567
+msgid "Kennitala (Optional)"
+msgstr ""
+
+#: src/KennitalaField.php:633
+msgid "Invalid kennitala. A kennitala is a string of 10 numeric characters."
+msgstr ""
+
+#: src/VariationFields.php:166
+msgid "License Expiry"
+msgstr ""
+
+#: src/VariationFields.php:168
+msgid "1 Month"
+msgstr ""
+
+#: src/VariationFields.php:169
+msgid "6 Months"
+msgstr ""
+
+#: src/VariationFields.php:170
+msgid "12 Months"
+msgstr ""
+
+#: src/VariationFields.php:171
+msgid "24 Months"
+msgstr ""
+
+#: src/VariationFields.php:181
+msgid "Product Code"
+msgstr ""
+
+#: src/VariationFields.php:396
+msgid "Domain"
+msgstr ""
+
+#: src/VariationFields.php:400
+msgid "License Code"
+msgstr ""
+
+#: src/VariationFields.php:404
+msgid "License Expires"
+msgstr ""
+
+#: src/VariationFields.php:455
+msgid "License Codes"
+msgstr ""
+
+#: src/VariationFields.php:468
+#, php-format
+msgid "License Code for %s"
+msgstr ""
+
+#: views/order_extra_fields.php:16
+msgid "Send me trinkets — I would be happy to receive surprise gifts in the mail such as stickers, postcards and more"
+msgstr ""
+
+#: views/order_extra_fields.php:24
+msgid "I would like to subscribe to your mailing list, for special offers, surveys and news about new features and updates"
+msgstr ""
+
+#: views/order_extra_fields.php:32
+msgid "I would like to receive super important updates about security updates and license expiry via email"
+msgstr ""
+
+#: views/product_extra_field.php:17
+msgid "Enter Your Domain Name"
+msgstr ""
+
+#: views/product_extra_field.php:24
+msgid "example.is"
+msgstr ""
+
+#: views/product_extra_field.php:33
+#, php-format
+msgid "The plugin is licensed on a %1$sper-domain basis%2$s and you will receive an activation code after checkout. The license key is specific to your site and you can use in any development or staging environment."
+msgstr ""
